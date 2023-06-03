@@ -1,0 +1,22 @@
+{
+  "include": [
+    "src"
+  ],
+  "compilerOptions": {
+    "outDir": "dist",
+    "moduleResolution": "node",
+    "module": "CommonJS",
+    "strict": true,
+    "strictNullChecks": false,
+    "pretty": true,
+    "sourceMap": false,
+    "declaration": true,
+    "stripInternal": true,
+    "skipLibCheck": true
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "compileOnSave": false,
+  "buildOnSave": false
+}

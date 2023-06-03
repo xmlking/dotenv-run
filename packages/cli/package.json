@@ -1,0 +1,35 @@
+{
+  "name": "@dotenv-run/cli",
+  "version": "0.1.0",
+  "description": "Run your scripts with dotenv variables",
+  "homepage": "https://github.com/chihab/dotenv-run",
+  "main": "dist/index.js",
+  "bin": {
+    "dotenv-run": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "dev": "tsc -w",
+    "build": "tsc"
+  },
+  "keywords": [
+    "dotenv",
+    "run",
+    "cli"
+  ],
+  "author": "Chihab Otmani <chihab@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "@dotenv-run/core": "workspace:*",
+    "cross-spawn": "^7.0.3",
+    "minimist": "^1.2.8"
+  },
+  "devDependencies": {
+    "@types/cross-spawn": "^6.0.2",
+    "@types/minimist": "^1.2.2"
+  }
+}
