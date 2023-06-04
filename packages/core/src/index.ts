@@ -9,15 +9,15 @@ function isSubfolder(parent: string, child: string) {
   return path.relative(parent, child).startsWith("..");
 }
 
-function getAbsoluteEnvPath(envPath: string) {
+function getAbsoluteEnvPath(envPath: string, cwd: string) {
   const _envPath = path.isAbsolute(envPath)
     ? envPath
-    : path.resolve(process.cwd(), envPath);
+    : path.resolve(cwd, envPath);
   return fs.existsSync(_envPath)
     ? fs.lstatSync(_envPath).isDirectory()
       ? _envPath
       : path.dirname(_envPath)
-    : process.cwd();
+    : cwd;
 }
 
 function getPathsDownTo(envPath: string, destination: string) {
@@ -42,13 +42,13 @@ function buildEnvFiles(environment: string, envPath: string) {
   ].filter(Boolean);
 }
 
-export function paths(environment: string, root: string) {
-  const _root = getAbsoluteEnvPath(root); // resolved path to .env file
+export function paths(environment: string, root: string, cwd = process.cwd()) {
+  const _root = getAbsoluteEnvPath(root, cwd); // resolved path to .env file
   let envPaths: string[] = [];
-  if (isSubfolder(_root, process.cwd())) {
+  if (isSubfolder(_root, cwd)) {
     envPaths = [_root];
   } else {
-    envPaths = getPathsDownTo(_root, process.cwd());
+    envPaths = getPathsDownTo(_root, cwd);
   }
   return envPaths
     .map((envPath) => path.join(envPath, ".env"))

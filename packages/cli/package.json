@@ -1,6 +1,6 @@
 {
   "name": "@dotenv-run/cli",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Run your scripts with dotenv variables",
   "homepage": "https://github.com/chihab/dotenv-run",
   "main": "dist/index.js",
