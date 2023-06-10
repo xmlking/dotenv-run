@@ -1,7 +1,6 @@
 <h1>@dotenv-run/cli</h1>
 
-
-Another CLI tool to load environment variables defined in `.env` files with monorepo support.
+A CLI tool to load command line and .env environment variables with monorepo support.
 
 * ✅ Load environment variables from `.env` files
 * ✅ Expand environment variables using dotenv-expand
@@ -25,9 +24,9 @@ Usage: dotenv-run [options] -- <command>
 
 Options:
 
-    -h, --help     output usage information
-    -p, --print    print the paths that will be loaded
-    -r, --root  root directory to search for .env files
+    -h, --help   output usage information
+    -p, --print  print the paths that will be loaded
+    -r, --root   root directory to search for .env files
 
 Examples:
 
@@ -37,19 +36,19 @@ Examples:
 
 ## Usage
 
-Beside loading environment variables, **@dotenv-run/cli** supports monorepo projects with multiple applications.
+In addition to loading environment variables, **@dotenv-run/cli** supports monorepo projects with multiple applications.
 
-When you have multiple applications in your monorepo, you can define common `.env.*` files in the root workspace and override the environment variables on each application or any other subdirectory below the root.
+In a monorepo configuration, `.env.*` files can be defined in the root workspace and overriden by each application.
 
 **Root workspace**
 
-`@dotenv-run/cli` will search for `.env.*` files in the closest parent directory containing `package.json` down to the current working directory. 
+`@dotenv-run/cli` will search for `.env.*` files in the closest parent directory containing `package.json`. 
 
-If no `package.json` is found, it will use the current working directory.
+`@dotenv-run/cli` will load all `.env.*` from the root workspace to the current working directory.
+
+If no `package.json` is found, it will load environment files within the current working directory.
 
 **Example**
-
-Let's say you have the following workspace:
 
 ```sh
 /workspace
@@ -117,12 +116,12 @@ Paths to the root workspace can be relative or absolute, the following are all v
 
 An env file for a specific mode (e.g. .env.production) will take higher priority than a generic one (e.g. .env).
 
-| valid `.env` filenames     | `NODE_ENV=*` | `NODE_ENV=test` |
-| -------------------------- | -------------- | ----------------- |
-| `.env`                     | ✔️             | ✔️                |
-| `.env.local`               | ✔️             | ✖️                |
-| `.env.${NODE_ENV}`       | ✔️             | ✔️                |
-| `.env.${NODE_ENV}.local` | ✔️             | ✔️                |
+| valid `.env` filenames     | `NODE_ENV=*`   | `NODE_ENV=test` |
+| -------------------------- | -------------- | --------------- |
+| `.env`                     | ✔️              | ✔️               |
+| `.env.local`               | ✔️              | ✖️               |
+| `.env.${NODE_ENV}`         | ✔️              | ✔️               |
+| `.env.${NODE_ENV}.local`   | ✔️              | ✔️               |
 
 In addition, environment variables that already exist when the CLI is executed have the highest priority and will not be overwritten by .env files. For example, when running `SOME_KEY=123 dotenv-run`.
 
