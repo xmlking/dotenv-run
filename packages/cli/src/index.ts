@@ -8,7 +8,7 @@ import * as minimist from "minimist";
 const argv = minimist(process.argv.slice(2), {
   string: ["root"],
   boolean: ["print"],
-  alias: { h: "help", p: "print", r: "root" },
+  alias: { h: "help", p: "print", r: "root", e: "root" },
 });
 
 function help() {

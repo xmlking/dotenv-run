@@ -16,8 +16,6 @@ Another CLI tool to load environment variables defined in `.env` files with mono
 ## Installation
 ```sh
 npm add -D @dotenv-run/cli
-## or globally
-npm i -g @dotenv-run/cli
 ```
 
 ## Prompt
@@ -56,7 +54,7 @@ Let's say you have the following workspace:
        src/
 .env.dev # API_BASE=https://dotenv-run.dev
 .env.prod # API_BASE=https://dotenv-run.app
-.env # API_USERS=$API_BASE/api/v1/users
+.env # API_USERS=$API_BASE/api/v1/users API_AUTH=https://$API_BASE/auth
 ```
 
 ```sh
@@ -75,21 +73,22 @@ $> dotenv-run -p -- bash -c 'echo "✨ $API_USERS"'
 ```
 
 ```sh
-$> cd /workspace/apps/frontend2
-$> NODE_ENV=dev dotenv-run -p -- bash -c 'echo "✨ $API_USERS"'
-✔ /workspace/.env
-✨
-
-$> NODE_ENV=dev dotenv-run -r ../.. -p -- bash -c 'echo "✨ $API_USERS"'
+$> cd /workspace/apps/frontend1
+$> NODE_ENV=dev dotenv-run -p -r ../.. -- bash -c 'printf "✨ API_USERS $API_USERS\n✨ API_AUTH $API_AUTH"'
+✔ /workspace/apps/frontend1/.env.local
 ✔ /workspace/.env.dev
 ✔ /workspace/.env
-✨ https://dotenv-run.dev/api/v1/users
+✨ API_USERS http://localhost:3001/users
+✨ API_AUTH https://dotenv-run.dev/api/v1/auth
+```
 
+```sh
+$> cd /workspace/apps/frontend2
 $> API_BASE=$CI_CONTAINER_API dotenv-run -r ../.. -p -- bash -c 'echo "✨ $API_USERS"'
 ✔ /workspace/.env
 ✨ https://XAE221D1DE-ci-provider.cloud/api/v1/users
 
-# CI_CONTAINER_API being an environment variable provided by some CI provider 
+# CI_CONTAINER_API could be an environment variable provided by some CI provider 
 ```
 
 Paths to the root workspace can be relative or absolute,  the following are all valid :
@@ -103,20 +102,18 @@ Paths to the root workspace can be relative or absolute,  the following are all 
 
 `@dotenv-run/cli` uses [dotenv](https://github.com/motdotla/dotenv) to support loading environment variables from `.env` files.
 
-`.env` files are to be stored alongside the `package.json`.
-
-`@dotenv-run/cli` loads `.env` files with these specific names for the following `ENV` values, files on the top have less priority than files on the bottom.
+`@dotenv-run/cli` loads `.env` files with these specific names for the following `NODE_ENV` values, files on the top have less priority than files on the bottom.
 
 An env file for a specific mode (e.g. .env.production) will take higher priority than a generic one (e.g. .env).
 
-| valid `.env` filenames     | `ENV=*` | `ENV=test` |
+| valid `.env` filenames     | `NODE_ENV=*` | `NODE_ENV=test` |
 | -------------------------- | -------------- | ----------------- |
 | `.env`                     | ✔️             | ✔️                |
 | `.env.local`               | ✔️             | ✖️                |
-| `.env.${ENV}`       | ✔️             | ✔️                |
-| `.env.${ENV}.local` | ✔️             | ✔️                |
+| `.env.${NODE_ENV}`       | ✔️             | ✔️                |
+| `.env.${NODE_ENV}.local` | ✔️             | ✔️                |
 
-In addition, environment variables that already exist when the CLI is executed have the highest priority and will not be overwritten by .env files. For example, when running `SOME_KEY=123 ng serve`.
+In addition, environment variables that already exist when the CLI is executed have the highest priority and will not be overwritten by .env files. For example, when running `SOME_KEY=123 dotenv-run`.
 
 ## Expanding `.env`
 
@@ -162,15 +159,15 @@ set "API_URL=abcdef" && npm start
 API_URL=abcdef npm start
 ```
 
-# Consuming Environment variable in Webapps
+# In the browser
 
-In order to consume environment variables in your webapp, you need to expose them to the browser.
+In order to consume environment variables in your webapps, you need to expose them to the browser. The bundler you use will need to support replacing the environment variables at build time.
 
-## React, Vue.js...
+**React, Vue.js...**
 
 Use [Vite](https://vitejs.dev/guide/env-and-mode.html)
 
-## Angular
+**Angular**
 
 Use [@ngx-env/builder](https://www.npmjs.com/package/@ngx-env/builder)
 
