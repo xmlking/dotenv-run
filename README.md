@@ -153,7 +153,7 @@ Defining environment variables can vary between OSes. It’s also important to k
 ### Windows (cmd.exe)
 
 ```cmd
-set "API_URL=abcdef" && npm start
+set "API_URL=abcdef" && dotenv-run -- npm start
 ```
 
 (Note: Quotes around the variable assignment are required to avoid a trailing whitespace.)
@@ -161,13 +161,13 @@ set "API_URL=abcdef" && npm start
 ### Windows (Powershell)
 
 ```Powershell
-($env:API_URL = "abcdef") -and (npm start)
+($env:API_URL = "abcdef") -and (dotenv-run -- npm start)
 ```
 
 ### Linux, macOS (Bash)
 
 ```sh
-API_URL=abcdef npm start
+API_URL=abcdef dotenv-run -- npm start
 ```
 
 # In the browser
