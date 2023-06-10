@@ -1,5 +1,16 @@
 # @dotenv-run/cli
 
+## 0.3.0
+
+### Minor Changes
+
+- feat(cli): search for root workspace
+
+### Patch Changes
+
+- Updated dependencies
+  - @dotenv-run/core@0.3.0
+
 ## 0.2.0
 
 ### Minor Changes

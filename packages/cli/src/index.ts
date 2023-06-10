@@ -1,14 +1,16 @@
 #!/usr/bin/env node
 
-import { paths, expand } from "@dotenv-run/core";
+import { paths } from "@dotenv-run/core";
 import * as chalk from "chalk";
-import * as spawn from "cross-spawn";
+import * as findUp from 'find-up';
 import * as minimist from "minimist";
+import * as path from 'path';
+import { run } from "./run";
 
 const argv = minimist(process.argv.slice(2), {
   string: ["root"],
-  boolean: ["print"],
-  alias: { h: "help", p: "print", r: "root", e: "root" },
+  boolean: ["silent"],
+  alias: { help: "h", silent: "s", root: ["e", "r"] }
 });
 
 function help() {
@@ -18,13 +20,13 @@ function help() {
   Options:
   
     -h, --help     output usage information
-    -p, --print    print the paths that will be loaded
+    -s, --silent   do not print .env file paths
     -r, --root     root directory to search for .env files, defaults to current working directory
     
   Examples:
   
     dotenv-run -- npm start
-    dotenv-run -p -r ../.. -- npm start
+    dotenv-run -r ../.. -- npm start
   `);
 }
 
@@ -36,21 +38,18 @@ if (argv.h) {
     help();
     process.exit(1);
   }
-  const envPaths = paths(process.env.NODE_ENV, argv.r || process.cwd());
-  if (argv.p) {
+  if (!argv.r) {
+    const p = findUp.sync('package.json');
+    if (!p) {
+      console.error(chalk.yellow("✖") + " No package.json found, reading from current working directory");
+    }
+    argv.r = p ? path.dirname(p) : process.cwd();
+  }
+  const envPaths = paths(process.env.NODE_ENV, argv.r);
+  if (!argv.s) {
     envPaths.forEach((envPath) => {
       console.log(`${chalk.green("✔")} ${envPath}`);
     });
   }
-  expand(envPaths);
-  spawn(cmd, argv._.slice(1), { stdio: "inherit" }).on(
-    "exit",
-    function (exitCode, signal) {
-      if (typeof exitCode === "number") {
-        process.exit(exitCode);
-      } else {
-        process.kill(process.pid, signal);
-      }
-    }
-  );
+  run(envPaths, cmd, argv._.slice(1));
 }

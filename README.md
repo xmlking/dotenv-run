@@ -8,7 +8,6 @@ Another CLI tool to load environment variables defined in `.env` files with mono
 * ✅ Load priorities of environment variables defined in `.env.*` files
 * ✅ Define environment variables for a specific mode using `NODE_ENV` (e.g. `.env.production`)
 * ✅ Supports hierarchical cascading configuration in monorepo projects ([Nx](https://nx.dev), [Turbo](https://turbo.build/), etc.)
-* ✅ Universal support for all programming languages and frameworks
   
 
 # Quick Start
@@ -28,19 +27,27 @@ Options:
 
     -h, --help     output usage information
     -p, --print    print the paths that will be loaded
-    -r, --root     root directory to search for .env files, defaults to current working directory
+    -r, --root  root directory to search for .env files
 
 Examples:
 
     dotenv-run -- npm start
-    dotenv-run -p -r ../.. -- npm run build
+    dotenv-run -s -r . -- npm run build
 ```
 
 ## Usage
 
 Beside loading environment variables, **@dotenv-run/cli** supports monorepo projects with multiple applications.
 
-When you have multiple applications in your monorepo, you can define common `.env.*` files in the root of your workspace and override the environment variables on each application or any other subdirectory below the root.
+When you have multiple applications in your monorepo, you can define common `.env.*` files in the root workspace and override the environment variables on each application or any other subdirectory below the root.
+
+**Root workspace**
+
+`@dotenv-run/cli` will search for `.env.*` files in the closest parent directory containing `package.json` down to the current working directory. 
+
+If no `package.json` is found, it will use the current working directory.
+
+**Example**
 
 Let's say you have the following workspace:
 
@@ -55,11 +62,12 @@ Let's say you have the following workspace:
 .env.dev # API_BASE=https://dotenv-run.dev
 .env.prod # API_BASE=https://dotenv-run.app
 .env # API_USERS=$API_BASE/api/v1/users API_AUTH=https://$API_BASE/auth
+package.json
 ```
 
 ```sh
 $> cd /workspace
-$> NODE_ENV=prod dotenv-run -p -- bash -c 'echo "✨ $API_USERS"'
+$> NODE_ENV=prod dotenv-run -- bash -c 'echo "✨ $API_USERS"'
 ✔ /workspace/.env.prod
 ✔ /workspace/.env
 ✨ https://dotenv-run.app/api/v1/users
@@ -67,14 +75,7 @@ $> NODE_ENV=prod dotenv-run -p -- bash -c 'echo "✨ $API_USERS"'
 
 ```sh
 $> cd /workspace/apps/frontend1
-$> dotenv-run -p -- bash -c 'echo "✨ $API_USERS"'
-✔ /workspace/apps/frontend1/.env.local
-✨ http://localhost:3001/users
-```
-
-```sh
-$> cd /workspace/apps/frontend1
-$> NODE_ENV=dev dotenv-run -p -r ../.. -- bash -c 'printf "✨ API_USERS $API_USERS\n✨ API_AUTH $API_AUTH"'
+$> NODE_ENV=dev dotenv-run -- bash -c 'printf "✨ API_USERS $API_USERS\n✨ API_AUTH $API_AUTH"'
 ✔ /workspace/apps/frontend1/.env.local
 ✔ /workspace/.env.dev
 ✔ /workspace/.env
@@ -84,18 +85,28 @@ $> NODE_ENV=dev dotenv-run -p -r ../.. -- bash -c 'printf "✨ API_USERS $API_US
 
 ```sh
 $> cd /workspace/apps/frontend2
-$> API_BASE=$CI_CONTAINER_API dotenv-run -r ../.. -p -- bash -c 'echo "✨ $API_USERS"'
+$> API_BASE=$CI_CONTAINER_API dotenv-run -- bash -c 'echo "✨ $API_USERS"'
 ✔ /workspace/.env
 ✨ https://XAE221D1DE-ci-provider.cloud/api/v1/users
 
 # CI_CONTAINER_API could be an environment variable provided by some CI provider 
 ```
 
-Paths to the root workspace can be relative or absolute,  the following are all valid :
-* ` "root": "../.."`
-* ` "root": "../...env"`
-* ` "root": "/workspace"`
-* ` "root": "/workspace/.env"`
+**-r option**
+
+```sh
+$> cd /workspace/apps/frontend1
+$> dotenv-run -r . -- bash -c 'echo "✨ $API_USERS"'
+✔ /workspace/apps/frontend1/.env.local
+✨ http://localhost:3001/users
+```
+
+
+Paths to the root workspace can be relative or absolute, the following are all valid :
+* ` -r ../..`
+* ` -r ../...env`
+* ` -r /workspace`
+* ` -r /workspace/.env`
 
 
 ## Loading Priorities
