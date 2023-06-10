@@ -1,6 +1,6 @@
 {
   "name": "@dotenv-run/core",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Run your scripts with dotenv variables",
   "homepage": "https://github.com/chihab/dotenv-run",
   "main": "dist/index.js",
