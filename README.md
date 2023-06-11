@@ -25,12 +25,12 @@ Usage: dotenv-run [options] -- <command>
 Options:
 
     -h, --help   output usage information
-    -p, --print  print the paths that will be loaded
+    -s, --silent do not print loaded .env files
     -r, --root   root directory to search for .env files
 
 Examples:
 
-    dotenv-run -- npm start
+    dotenv-run npm start
     dotenv-run -s -r . -- npm run build
 ```
 
