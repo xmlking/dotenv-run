@@ -1,5 +1,11 @@
 # @dotenv-run/core
 
+## 0.4.1
+
+### Patch Changes
+
+- fix(cli): fallback root workspace to package.json path
+
 ## 0.4.0
 
 ### Minor Changes

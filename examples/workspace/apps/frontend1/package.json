@@ -1,5 +1,5 @@
 {
     "scripts": {
-        "start": "node -e 'console.log(process.env.API_USERS)'"
+        "start": "dotenv-run -- node -e 'console.log(process.env.API_USERS)'"
     }
 }

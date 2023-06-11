@@ -39,7 +39,9 @@ if (argv.h) {
     process.exit(1);
   }
   if (!argv.r) {
-    const p = findUp.sync(['turbo.json', 'nx.json', 'lerna.json', 'package.json', 'pnpm-workspace.yaml']);
+    let p = findUp.sync(['turbo.json', 'nx.json', 'lerna.json', 'pnpm-workspace.yaml']);
+    if (!p)
+      p = findUp.sync(['package.json']);
     argv.r = p ? path.dirname(p) : process.cwd();
   }
   const envPaths = paths(process.env.NODE_ENV, argv.r);
