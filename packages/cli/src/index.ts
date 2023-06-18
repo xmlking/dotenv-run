@@ -2,15 +2,16 @@
 
 import { paths } from "@dotenv-run/core";
 import * as chalk from "chalk";
-import * as findUp from 'find-up';
+import * as findUp from "find-up";
 import * as minimist from "minimist";
-import * as path from 'path';
-import { run } from "./run";
+import * as path from "path";
+import { fork } from "./fork";
+import * as chokidar from "chokidar";
 
 const argv = minimist(process.argv.slice(2), {
   string: ["root"],
   boolean: ["silent"],
-  alias: { help: "h", silent: "s", root: ["e", "r"] }
+  alias: { help: "h", silent: "s", root: ["e", "r"] },
 });
 
 function help() {
@@ -21,12 +22,13 @@ function help() {
   
     -h, --help     output usage information
     -s, --silent   do not print .env file paths
+    -w, --watch    watch for changes in .env files
     -r, --root     root directory to search for .env files, defaults to current working directory
     
   Examples:
   
-    dotenv-run -- npm start
-    dotenv-run -r ../.. -- npm start
+    dotenv-run -w -- npm start
+    dotenv-run -r ../.. -- npm build
   `);
 }
 
@@ -39,9 +41,13 @@ if (argv.h) {
     process.exit(1);
   }
   if (!argv.r) {
-    let p = findUp.sync(['turbo.json', 'nx.json', 'lerna.json', 'pnpm-workspace.yaml']);
-    if (!p)
-      p = findUp.sync(['package.json']);
+    let p = findUp.sync([
+      "turbo.json",
+      "nx.json",
+      "lerna.json",
+      "pnpm-workspace.yaml",
+    ]);
+    if (!p) p = findUp.sync(["package.json"]);
     argv.r = p ? path.dirname(p) : process.cwd();
   }
   const envPaths = paths(process.env.NODE_ENV, argv.r);
@@ -50,5 +56,13 @@ if (argv.h) {
       console.log(`${chalk.green("✔")} ${envPath}`);
     });
   }
-  run(envPaths, cmd, argv._.slice(1));
+  const watcher = chokidar.watch(envPaths, { persistent: true });
+  fork(envPaths, cmd, argv._.slice(1));
+  if (argv.w) {
+    console.log(`${chalk.green("✔")} watching for changes...`);
+    watcher.on("change", (path) => {
+      console.log(`${chalk.green("✔")} ${path} changed`);
+      fork(envPaths, cmd, argv._.slice(1));
+    });
+  }
 }

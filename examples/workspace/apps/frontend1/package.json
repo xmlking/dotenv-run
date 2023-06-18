@@ -1,5 +1,5 @@
 {
     "scripts": {
-        "start": "dotenv-run -- node -e 'console.log(process.env.API_USERS)'"
+        "start": "NODE_ENV=dev dotenv-run -w -- bash -c 'printf \"✨ API_USERS $API_USERS\n✨ API_AUTH $API_AUTH\n\"'"
     }
 }
