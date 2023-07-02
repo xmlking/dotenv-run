@@ -1,5 +1,11 @@
 # @dotenv-run/core
 
+## 0.5.0
+
+### Minor Changes
+
+- 5efdd8f: add environment option
+
 ## 0.4.1
 
 ### Patch Changes

@@ -8,9 +8,9 @@ import * as path from 'path';
 import { run } from "./run";
 
 const argv = minimist(process.argv.slice(2), {
-  string: ["root"],
+  string: ["root", "env"],
   boolean: ["silent"],
-  alias: { help: "h", silent: "s", root: ["e", "r"] }
+  alias: { help: "h", silent: "s", root: "r", env: "e" }
 });
 
 function help() {
@@ -20,6 +20,7 @@ function help() {
   Options:
   
     -h, --help     output usage information
+    -e, --env      output usage information
     -s, --silent   do not print .env file paths
     -r, --root     root directory to search for .env files, defaults to current working directory
     
@@ -27,6 +28,7 @@ function help() {
   
     dotenv-run -- npm start
     dotenv-run -r ../.. -- npm start
+    dotenv-run -e prod -- npm start
   `);
 }
 
@@ -44,7 +46,7 @@ if (argv.h) {
       p = findUp.sync(['package.json']);
     argv.r = p ? path.dirname(p) : process.cwd();
   }
-  const envPaths = paths(process.env.NODE_ENV, argv.r);
+  const envPaths = paths(argv.e || process.env.NODE_ENV, argv.r);
   if (!argv.s) {
     envPaths.forEach((envPath) => {
       console.log(`${chalk.green("✔")} ${envPath}`);

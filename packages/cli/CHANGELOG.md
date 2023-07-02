@@ -1,5 +1,16 @@
 # @dotenv-run/cli
 
+## 0.5.0
+
+### Minor Changes
+
+- 5efdd8f: add environment option
+
+### Patch Changes
+
+- Updated dependencies [5efdd8f]
+  - @dotenv-run/core@0.5.0
+
 ## 0.4.1
 
 ### Patch Changes

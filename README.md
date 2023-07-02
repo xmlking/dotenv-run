@@ -2,11 +2,14 @@
 
 A CLI tool to load command line and .env environment variables with monorepo support.
 
+* ✅ Loading environment variables from the command line `API_BASE=/v1/ dotenv-run -- npm start`
 * ✅ Load environment variables from `.env` files
-* ✅ Expand environment variables using dotenv-expand
-* ✅ Load priorities of environment variables defined in `.env.*` files
-* ✅ Define environment variables for a specific mode using `NODE_ENV` (e.g. `.env.production`)
-* ✅ Supports hierarchical cascading configuration in monorepo projects ([Nx](https://nx.dev), [Turbo](https://turbo.build/), etc.)
+* ✅ Expand environment variables `API_URL=$API_BASE/users`
+* ✅ Define environment variables for a specific (e.g. `.env.production`)
+* ✅ Load priorities of `.env.*` files (e.g. `.env.production` > `.env`)
+* ✅ Supports hierarchical cascading configuration in monorepo projects ([Nx](https://nx.dev), [Turbo](https://turbo.build/), etc.) 
+ `apps/next-app/.env` > `apps/.env` > `.env`
+* ✅ Supports all platforms and languages (Node.js, Python...) `dotenv-run -- python main.py`
   
 
 # Quick Start
@@ -24,14 +27,16 @@ Usage: dotenv-run [options] -- <command>
 
 Options:
 
-    -h, --help   output usage information
-    -s, --silent do not print loaded .env files
-    -r, --root   root directory to search for .env files
+    -h, --help     output usage information
+    -e, --env      environment name (e.g. dev, prod)
+    -s, --silent   do not print .env file paths
+    -r, --root     root directory to search for .env files
 
 Examples:
 
-    dotenv-run npm start
-    dotenv-run -s -r . -- npm run build
+    dotenv-run -- npm start
+    dotenv-run -r ../.. -- npm start
+    dotenv-run -e prod -- npm start
 ```
 
 ## Usage
@@ -66,7 +71,7 @@ package.json
 
 ```sh
 $> cd /platform
-$> NODE_ENV=prod dotenv-run -- bash -c 'echo "✨ $API_USERS"'
+$> dotenv-run -e prod -- bash -c 'echo "✨ $API_USERS"'
 ✔ /platform/.env.prod
 ✔ /platform/.env
 ✨ https://dotenv-run.app/api/v1/users
@@ -74,7 +79,7 @@ $> NODE_ENV=prod dotenv-run -- bash -c 'echo "✨ $API_USERS"'
 
 ```sh
 $> cd /platform/apps/frontend1
-$> NODE_ENV=dev dotenv-run -- bash -c 'printf "✨ API_USERS $API_USERS\n✨ API_AUTH $API_AUTH"'
+$> dotenv-run -e dev -- bash -c 'printf "✨ API_USERS $API_USERS\n✨ API_AUTH $API_AUTH"'
 ✔ /platform/apps/frontend1/.env.local
 ✔ /platform/.env.dev
 ✔ /platform/.env
@@ -112,16 +117,16 @@ Paths to the root workspace can be relative or absolute, the following are all v
 
 `@dotenv-run/cli` uses [dotenv](https://github.com/motdotla/dotenv) to support loading environment variables from `.env` files.
 
-`@dotenv-run/cli` loads `.env` files with these specific names for the following `NODE_ENV` values, files on the top have less priority than files on the bottom.
+`@dotenv-run/cli` loads `.env` files with these specific names for the following `-e ENV` value, files on the top have less priority than files on the bottom.
 
 An env file for a specific mode (e.g. .env.production) will take higher priority than a generic one (e.g. .env).
 
-| valid `.env` filenames     | `NODE_ENV=*`   | `NODE_ENV=test` |
+| valid `.env` filenames     | `ENV=*`   | `ENV=test` |
 | -------------------------- | -------------- | --------------- |
 | `.env`                     | ✔️              | ✔️               |
 | `.env.local`               | ✔️              | ✖️               |
-| `.env.${NODE_ENV}`         | ✔️              | ✔️               |
-| `.env.${NODE_ENV}.local`   | ✔️              | ✔️               |
+| `.env.${ENV}`         | ✔️              | ✔️               |
+| `.env.${ENV}.local`   | ✔️              | ✔️               |
 
 In addition, environment variables that already exist when the CLI is executed have the highest priority and will not be overwritten by .env files. For example, when running `SOME_KEY=123 dotenv-run`.
 
