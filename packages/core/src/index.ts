@@ -1,7 +1,8 @@
-import { config } from "dotenv";
 import { expand as dotenvExpand } from "dotenv-expand";
+import { config } from "dotenv";
 import * as fs from "fs";
 import * as path from "path";
+import * as chalk from "chalk";
 
 export type Env = Record<string, string>;
 
@@ -60,7 +61,7 @@ export function expand(envPaths: string[]) {
   envPaths.forEach((dotenvFile) => {
     dotenvExpand(
       config({
-        path: dotenvFile
+        path: dotenvFile,
       })
     );
   });
@@ -74,4 +75,66 @@ export function filter(env: Env, prefix: RegExp): Env {
       env[key] = process.env[key];
       return env;
     }, {});
+}
+
+export interface DotenvRunOptions {
+  prefix?: string;
+  root?: string;
+  verbose?: boolean;
+  appEnv?: string;
+}
+
+export type Dict = Record<string, string>;
+
+function prepareEnv(processEnv: any) {
+  const values = Object.keys(processEnv)
+    .filter((key) => key !== "NODE_ENV")
+    .reduce<{
+      raw: Dict;
+      stringified: Dict;
+      full: Dict;
+    }>(
+      (env, key) => {
+        const value = JSON.stringify(processEnv[key]);
+        env.raw[key] = processEnv[key];
+        env.stringified[key] = value;
+        env.full[`process.env.${key}`] = value;
+        env.full[`import.meta.env.${key}`] = value;
+        return env;
+      },
+      {
+        raw: {},
+        stringified: {},
+        full: {},
+      }
+    );
+  return values;
+}
+
+export function plugin(options: DotenvRunOptions, cwd: string) {
+  options.appEnv = options.appEnv ?? "NODE_ENV";
+  options.root = options.root ?? ".";
+
+  const appEnv = process.env[options.appEnv] ?? process.env.NODE_ENV;
+  const envPaths = paths(appEnv, options.root ?? ".", cwd);
+  expand(envPaths);
+  const values = filter(process.env, new RegExp(options.prefix, "i"));
+  if (options.verbose) {
+    console.log("---------------------------------");
+    console.log(`${chalk.green("-")} Verbose: `, options.verbose);
+    console.log(`${chalk.green("-")} Prefix: `, options.prefix);
+    console.log(`${chalk.green("-")} Root directory: `, options.root);
+    console.log(`${chalk.green("-")} Working directory: `, cwd);
+    console.log(`${chalk.green("-")} Environment files: `);
+    envPaths.forEach((envPath) => {
+      console.log(`${chalk.green(" ✔")} ${envPath}`);
+    });
+    console.log(`- Injected keys:`);
+    console.log(`${chalk.green(" ✔")} ${options.appEnv} => ${appEnv}`);
+    for (const key in values) {
+      console.log(`${chalk.green(" ✔")} ${key}`);
+    }
+    console.log("---------------------------------\n");
+  }
+  return prepareEnv({ ...values, [options.appEnv]: appEnv });
 }

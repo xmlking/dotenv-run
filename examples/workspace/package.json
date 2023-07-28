@@ -1,10 +1,12 @@
 {
     "name": "platform",
     "version": "1.0.0",
-    "scripts": {
-    },
     "devDependencies": {
-        "@dotenv-run/cli": "*"
+        "@dotenv-run/cli": "*",
+        "@dotenv-run/webpack": "*",
+        "@dotenv-run/rollup": "*",
+        "webpack": "^5.0.0",
+        "webpack-cli": "^5.0.0",
+        "rollup": "^3.0.0"
     }
-    
 }
