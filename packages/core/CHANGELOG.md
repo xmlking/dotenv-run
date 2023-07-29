@@ -1,5 +1,11 @@
 # @dotenv-run/core
 
+## 1.0.0
+
+### Major Changes
+
+- feat: add bundler plugins
+
 ## 0.5.0
 
 ### Minor Changes

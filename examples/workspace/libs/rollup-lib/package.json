@@ -1,0 +1,8 @@
+{
+  "name": "rollup-lib",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "NODE_ENV=dev rollup -c rollup.config.mjs",
+    "test": "vitest run"
+  }
+}

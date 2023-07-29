@@ -1,5 +1,5 @@
 {
-  "name": "@dotenv-run/core",
+  "name": "@dotenv-run/webpack",
   "version": "1.0.0",
   "description": "Run your scripts with dotenv variables",
   "homepage": "https://github.com/chihab/dotenv-run",
@@ -21,11 +21,14 @@
   "author": "Chihab Otmani <chihab@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "dotenv": "^16.1.4",
-    "dotenv-expand": "^10.0.0",
+    "@dotenv-run/core": "^1.0.0",
     "chalk": "^4.1.0"
   },
+  "peerDependencies": {
+    "webpack": "^5.0.0"
+  },
   "devDependencies": {
+    "webpack": "^5.0.0",
     "@types/node": "^16.0.0"
   }
 }

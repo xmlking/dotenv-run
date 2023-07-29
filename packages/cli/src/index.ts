@@ -1,16 +1,16 @@
 #!/usr/bin/env node
 
-import { paths } from "@dotenv-run/core";
+import { expand, paths } from "@dotenv-run/core";
 import * as chalk from "chalk";
-import * as findUp from 'find-up';
+import * as findUp from "find-up";
 import * as minimist from "minimist";
-import * as path from 'path';
+import * as path from "path";
 import { run } from "./run";
 
 const argv = minimist(process.argv.slice(2), {
   string: ["root", "env"],
   boolean: ["silent"],
-  alias: { help: "h", silent: "s", root: "r", env: "e" }
+  alias: { help: "h", silent: "s", root: "r", env: "e" },
 });
 
 function help() {
@@ -41,12 +41,17 @@ if (argv.h) {
     process.exit(1);
   }
   if (!argv.r) {
-    let p = findUp.sync(['turbo.json', 'nx.json', 'lerna.json', 'pnpm-workspace.yaml']);
-    if (!p)
-      p = findUp.sync(['package.json']);
+    let p = findUp.sync([
+      "turbo.json",
+      "nx.json",
+      "lerna.json",
+      "pnpm-workspace.yaml",
+    ]);
+    if (!p) p = findUp.sync(["package.json"]);
     argv.r = p ? path.dirname(p) : process.cwd();
   }
   const envPaths = paths(argv.e || process.env.NODE_ENV, argv.r);
+  expand(envPaths);
   if (!argv.s) {
     envPaths.forEach((envPath) => {
       console.log(`${chalk.green("✔")} ${envPath}`);

@@ -15,8 +15,13 @@ jobs:
           node-version: 18
       - uses: pnpm/action-setup@v2
         with:
-          version: 6.0.2
+          version: 7.27.1
       - name: Build Packages
         run: |
           pnpm i
-          pnpm build    
+          pnpm build
+      - name: Build and Test Examples
+        run: |
+          cd examples/workspace
+          npm run build:all
+          npm run test:all
