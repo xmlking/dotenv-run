@@ -1,6 +1,6 @@
 {
   "name": "@dotenv-run/rollup",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Run your scripts with dotenv variables",
   "homepage": "https://github.com/chihab/dotenv-run",
   "main": "dist/index.js",

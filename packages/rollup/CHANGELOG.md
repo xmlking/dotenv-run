@@ -1,5 +1,11 @@
 # @dotenv-run/rollup
 
+## 1.0.1
+
+### Patch Changes
+
+- 429d699: refactor(webpack): export dotenv results
+
 ## 1.0.0
 
 ### Major Changes

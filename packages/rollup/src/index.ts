@@ -10,3 +10,5 @@ export default function (options: DotenvRunOptions) {
     }),
   };
 }
+
+export { DotenvRunOptions };
