@@ -1,7 +1,7 @@
 {
-  "name": "@dotenv-run/core",
+  "name": "@dotenv-run/load",
   "version": "1.0.0",
-  "description": "Run your scripts with dotenv variables",
+  "description": "Perload your scripts with dotenv variables",
   "homepage": "https://github.com/chihab/dotenv-run",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -21,10 +21,7 @@
   "author": "Chihab Otmani <chihab@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "dotenv": "^16.1.4",
-    "dotenv-expand": "^10.0.0",
-    "find-up": "^5.0.0",
-    "chalk": "^4.1.0"
+    "@dotenv-run/core": "^1.0.0"
   },
   "devDependencies": {
     "@types/node": "^16.0.0"

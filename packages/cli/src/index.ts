@@ -1,10 +1,7 @@
 #!/usr/bin/env node
-
-import { expand, paths } from "@dotenv-run/core";
+import { rootExpand } from "@dotenv-run/core";
 import * as chalk from "chalk";
-import * as findUp from "find-up";
 import * as minimist from "minimist";
-import * as path from "path";
 import { run } from "./run";
 
 const argv = minimist(process.argv.slice(2), {
@@ -40,22 +37,11 @@ if (argv.h) {
     help();
     process.exit(1);
   }
-  if (!argv.r) {
-    let p = findUp.sync([
-      "turbo.json",
-      "nx.json",
-      "lerna.json",
-      "pnpm-workspace.yaml",
-    ]);
-    if (!p) p = findUp.sync(["package.json"]);
-    argv.r = p ? path.dirname(p) : process.cwd();
-  }
-  const envPaths = paths(argv.e || process.env.NODE_ENV, argv.r);
-  expand(envPaths);
+  const envPaths = rootExpand(argv.r, argv.e);
   if (!argv.s) {
     envPaths.forEach((envPath) => {
       console.log(`${chalk.green("✔")} ${envPath}`);
     });
   }
-  run(envPaths, cmd, argv._.slice(1));
+  run(cmd, argv._.slice(1));
 }

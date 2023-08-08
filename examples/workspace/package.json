@@ -8,6 +8,7 @@
   },
   "devDependencies": {
     "@dotenv-run/cli": "^1.0.0",
+    "@dotenv-run/load": "^1.0.0",
     "@dotenv-run/webpack": "^1.0.0",
     "@dotenv-run/rollup": "^1.0.0",
     "webpack": "^5.0.0",

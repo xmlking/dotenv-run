@@ -25,4 +25,31 @@ describe("dotenv-run should give the expected output", () => {
     );
     expect(actual).toContain("https://dotenv-run.app/");
   });
+
+  it("preload dev", () => {
+    const actual = execSync("NODE_ENV=dev node -r @dotenv-run/load server.js", {
+      encoding: "utf8",
+    });
+    expect(actual).toContain("https://dotenv-run.dev/");
+  });
+
+  it("preload prod", () => {
+    const actual = execSync(
+      "NODE_ENV=prod node -r @dotenv-run/load server.js",
+      {
+        encoding: "utf8",
+      }
+    );
+    expect(actual).toContain("https://dotenv-run.app/");
+  });
+
+  it("NODE_OPTIONS prod", () => {
+    const actual = execSync(
+      "NODE_ENV=prod NODE_OPTIONS='-r @dotenv-run/load' node server.js",
+      {
+        encoding: "utf8",
+      }
+    );
+    expect(actual).toContain("https://dotenv-run.app/");
+  });
 });
