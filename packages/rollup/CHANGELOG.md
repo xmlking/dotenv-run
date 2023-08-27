@@ -1,5 +1,11 @@
 # @dotenv-run/rollup
 
+## 1.1.1
+
+### Patch Changes
+
+- cea8c35: fix(rollup): upgrade rollup peerdep
+
 ## 1.1.0
 
 ### Minor Changes
