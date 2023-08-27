@@ -1,6 +1,7 @@
 {
   "name": "webpack-app",
   "version": "1.0.0",
+  "private": true,
   "scripts": {
     "build": "NODE_ENV=prod webpack build --mode production",
     "test": "npm run build && vitest run"

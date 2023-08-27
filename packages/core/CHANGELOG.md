@@ -1,5 +1,11 @@
 # @dotenv-run/core
 
+## 1.1.0
+
+### Minor Changes
+
+- af82054: feat: add cjs format and doc
+
 ## 1.0.0
 
 ### Major Changes

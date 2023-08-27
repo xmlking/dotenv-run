@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "turbo run dev --parallel --no-cache --filter=@dotenv-run/*",
-    "test": "turbo test  --filter=@dotenv-run/*",
+    "test": "turbo test --filter=@dotenv-run/*",
     "build": "turbo build  --filter=@dotenv-run/*"
   },
   "license": "MIT",

@@ -18,10 +18,10 @@ importers:
 
   examples:
     specifiers:
-      '@dotenv-run/cli': ^1.0.0
-      '@dotenv-run/load': ^1.0.0
-      '@dotenv-run/rollup': ^1.0.0
-      '@dotenv-run/webpack': ^1.0.0
+      '@dotenv-run/cli': ^1.1.0
+      '@dotenv-run/load': ^1.1.0
+      '@dotenv-run/rollup': ^1.1.0
+      '@dotenv-run/webpack': ^1.1.0
       '@playwright/test': ^1.37.1
       nx: ^16.5.5
       rollup: ^3.0.0
@@ -51,7 +51,7 @@ importers:
       '@angular/platform-browser': ^16.0.0
       '@angular/platform-browser-dynamic': ^16.0.0
       '@angular/platform-server': ^16.0.0
-      '@dotenv-run/webpack': ^1.0.0
+      '@dotenv-run/webpack': ^1.1.0
       '@types/node': ^16.0.0
       cross-env: ^7.0.3
       rxjs: ~7.6.0
@@ -89,7 +89,7 @@ importers:
 
   packages/cli:
     specifiers:
-      '@dotenv-run/core': ^1.0.0
+      '@dotenv-run/core': ^1.1.0
       '@types/cross-spawn': ^6.0.2
       '@types/minimist': ^1.2.2
       chalk: ^4.1.0
@@ -121,7 +121,7 @@ importers:
 
   packages/load:
     specifiers:
-      '@dotenv-run/core': ^1.0.0
+      '@dotenv-run/core': ^1.1.0
       '@types/node': ^16.0.0
     dependencies:
       '@dotenv-run/core': link:../core
@@ -130,7 +130,7 @@ importers:
 
   packages/rollup:
     specifiers:
-      '@dotenv-run/core': ^1.0.0
+      '@dotenv-run/core': ^1.1.0
       '@rollup/plugin-replace': ^5.0.2
       '@types/node': ^16.0.0
       rollup: ^2.0.0
@@ -143,7 +143,7 @@ importers:
 
   packages/webpack:
     specifiers:
-      '@dotenv-run/core': ^1.0.0
+      '@dotenv-run/core': ^1.1.0
       '@types/node': ^16.0.0
       webpack: ^5.0.0
     dependencies:
