@@ -9,6 +9,11 @@
                 "dist"
             ]
         },
+        "test": {
+            "dependsOn": [
+                "^test"
+            ]
+        },
         "dev": {
             "dependsOn": [
                 "^dev"

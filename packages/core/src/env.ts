@@ -1,5 +1,5 @@
 import { config } from "dotenv";
-import { getAbsoluteEnvPath, getPathsDownTo, isSubfolder } from "./utils";
+import { getAbsoluteEnvPath, getPathsDownTo, isSubfolder } from "./utils.js";
 import { expand as dotenvExpand } from "dotenv-expand";
 import * as fs from "fs";
 import * as path from "path";
@@ -29,7 +29,11 @@ export function filter(env: Env, prefix: RegExp): Env {
     }, {});
 }
 
-export function paths(environment: string, root: string, cwd = process.cwd()) {
+export function paths(
+  environment: string,
+  root: string,
+  cwd = process.cwd()
+): string[] {
   const _root = getAbsoluteEnvPath(root, cwd); // resolved path to .env file
   let envPaths: string[] = [];
   if (isSubfolder(_root, cwd)) {

@@ -1,4 +1,4 @@
-import * as spawn from "cross-spawn";
+import spawn from "cross-spawn";
 
 export const run = (cmd: string, args: string[]) => {
   spawn(cmd, args, { stdio: "inherit" }).on(

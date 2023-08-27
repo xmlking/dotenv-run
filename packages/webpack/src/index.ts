@@ -1,6 +1,7 @@
 import { DotenvRunOptions, Dict, plugin } from "@dotenv-run/core";
-import * as webpack from "webpack";
-class DotenvRunPlugin {
+import type { WebpackPluginInstance, Compiler } from "webpack";
+import { DefinePlugin } from "webpack";
+class DotenvRunPlugin implements WebpackPluginInstance {
   public raw: Dict = {};
   public full: Dict = {};
   public stringified: Dict = {};
@@ -12,8 +13,8 @@ class DotenvRunPlugin {
     this.stringified = stringified;
   }
 
-  apply(compiler: webpack.Compiler) {
-    const definePlugin = new webpack.DefinePlugin(
+  apply(compiler: Compiler) {
+    const definePlugin = new DefinePlugin(
       this.ssr
         ? { ...this.full }
         : {

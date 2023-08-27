@@ -5,15 +5,14 @@
   "compilerOptions": {
     "outDir": "dist",
     "moduleResolution": "node",
-    "module": "CommonJS",
+    "target": "ES2022",
+    "module": "ES2022",
     "strict": true,
-    "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "strictPropertyInitialization": false,
     "strictNullChecks": false,
     "pretty": true,
-    "sourceMap": true,
-    "declaration": true
+    "sourceMap": true
   },
   "exclude": [
     "node_modules"

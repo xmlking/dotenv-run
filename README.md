@@ -55,19 +55,24 @@ You can specify a root workspace with the `-r` option.
 
 **Example**
 
+Given the following files:
+
 ```sh
-/platform
- apps
-    frontend1
-       .env.local # API_USERS=http://localhost:3001/users
-       src/
-    frontend2
-       src/
-.env.dev # API_BASE=https://dotenv-run.dev
-.env.prod # API_BASE=https://dotenv-run.app
-.env # API_USERS=$API_BASE/api/v1/users API_AUTH=https://$API_BASE/auth
-package.json
+platform
+├── apps
+│   ├── frontend1
+│   │   ├── .env.local # API_USERS=http://localhost:3001/users
+│   │   └── vite.config.js
+│   └── frontend2
+│       ├── package.json
+│       └── webapp.config.mjs
+├── .env.dev # API_BASE=https://dotenv-run.dev
+├── .env.prod # API_BASE=https://dotenv-run.app
+├── .env # API_USERS=$API_BASE/api/v1/users API_AUTH=https://$API_BASE/auth
+├── nx.json
+└── package.json
 ```
+
 
 ```sh
 $> cd /platform

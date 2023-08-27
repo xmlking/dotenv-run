@@ -23,8 +23,7 @@
   "license": "ISC",
   "dependencies": {
     "@dotenv-run/core": "^1.0.0",
-    "@rollup/plugin-replace": "^5.0.2",
-    "chalk": "^4.1.0"
+    "@rollup/plugin-replace": "^5.0.2"
   },
   "peerDependencies": {
     "rollup": "^2.0.0"

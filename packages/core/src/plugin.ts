@@ -1,4 +1,4 @@
-import { paths, expand, filter, Env } from "./env";
+import { paths, expand, filter, Env } from "./env.js";
 import * as chalk from "chalk";
 
 export interface DotenvRunOptions {
@@ -36,22 +36,27 @@ function prepareEnv(processEnv: any) {
   return values;
 }
 
-function print(options: DotenvRunOptions, envPaths: string[], appEnv: string, values: Env) {
-    console.log("---------------------------------");
-    console.log(`${chalk.green("-")} Verbose: `, options.verbose);
-    console.log(`${chalk.green("-")} Prefix: `, options.prefix);
-    console.log(`${chalk.green("-")} Root directory: `, options.root);
-    console.log(`${chalk.green("-")} Working directory: `, options.cwd);
-    console.log(`${chalk.green("-")} Environment files: `);
-    envPaths.forEach((envPath) => {
-        console.log(`${chalk.green(" ✔")} ${envPath}`);
-    });
-    console.log(`- Injected keys:`);
-    console.log(`${chalk.green(" ✔")} ${options.appEnv} => ${appEnv}`);
-    for (const key in values) {
-        console.log(`${chalk.green(" ✔")} ${key}`);
-    }
-    console.log("---------------------------------\n");
+function print(
+  options: DotenvRunOptions,
+  envPaths: string[],
+  appEnv: string,
+  values: Env
+) {
+  console.log("---------------------------------");
+  console.log(`${chalk.green("-")} Verbose: `, options.verbose);
+  console.log(`${chalk.green("-")} Prefix: `, options.prefix);
+  console.log(`${chalk.green("-")} Root directory: `, options.root);
+  console.log(`${chalk.green("-")} Working directory: `, options.cwd);
+  console.log(`${chalk.green("-")} Environment files: `);
+  envPaths.forEach((envPath) => {
+    console.log(`${chalk.green(" ✔")} ${envPath}`);
+  });
+  console.log(`- Injected keys:`);
+  console.log(`${chalk.green(" ✔")} ${options.appEnv} => ${appEnv}`);
+  for (const key in values) {
+    console.log(`${chalk.green(" ✔")} ${key}`);
+  }
+  console.log("---------------------------------\n");
 }
 
 export function plugin(options: DotenvRunOptions) {
@@ -67,4 +72,3 @@ export function plugin(options: DotenvRunOptions) {
   }
   return prepareEnv({ ...values, [options.appEnv]: appEnv });
 }
-
