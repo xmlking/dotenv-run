@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "tsc -w",
     "build": "tsc"
-  },
+  },  
   "files": [
     "dist",
     "README.md"

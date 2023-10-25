@@ -11,14 +11,16 @@ export interface DotenvRunOptions {
 
 export type Dict = Record<string, string>;
 
+export type DotenvRun = {
+  raw: Dict;
+  stringified: Dict;
+  full: Dict;
+};
+
 function prepareEnv(processEnv: any) {
   const values = Object.keys(processEnv)
     .filter((key) => key !== "NODE_ENV")
-    .reduce<{
-      raw: Dict;
-      stringified: Dict;
-      full: Dict;
-    }>(
+    .reduce<DotenvRun>(
       (env, key) => {
         const value = JSON.stringify(processEnv[key]);
         env.raw[key] = processEnv[key];
@@ -59,7 +61,7 @@ function print(
   console.log("---------------------------------\n");
 }
 
-export function plugin(options: DotenvRunOptions) {
+export function env(options: DotenvRunOptions) {
   options.appEnv = options.appEnv ?? "NODE_ENV";
   options.root = options.root ?? ".";
 
@@ -72,3 +74,5 @@ export function plugin(options: DotenvRunOptions) {
   }
   return prepareEnv({ ...values, [options.appEnv]: appEnv });
 }
+
+export const plugin = env;
