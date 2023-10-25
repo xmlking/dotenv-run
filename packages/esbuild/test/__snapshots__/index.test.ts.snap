@@ -1,0 +1,16 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Usage with esbuild > should replace environment variables using esbuild plugin 1`] = `
+"\\"use strict\\";
+(() => {
+  // test/util.js
+  function meta() {
+    return \\"https://dotenv-run.app\\";
+  }
+
+  // test/app.js
+  console.log(\\"https://dotenv-run.app\\");
+  console.log(meta());
+})();
+"
+`;

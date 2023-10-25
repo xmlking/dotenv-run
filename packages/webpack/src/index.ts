@@ -1,4 +1,4 @@
-import { DotenvRunOptions, Dict, plugin } from "@dotenv-run/core";
+import { DotenvRunOptions, Dict, env } from "@dotenv-run/core";
 import type { WebpackPluginInstance, Compiler } from "webpack";
 import { DefinePlugin } from "webpack";
 class DotenvRunPlugin implements WebpackPluginInstance {
@@ -7,7 +7,7 @@ class DotenvRunPlugin implements WebpackPluginInstance {
   public stringified: Dict = {};
 
   constructor(private options: DotenvRunOptions, private ssr = false) {
-    const { full, stringified, raw } = plugin(this.options);
+    const { full, stringified, raw } = env(this.options);
     this.raw = raw;
     this.full = full;
     this.stringified = stringified;
