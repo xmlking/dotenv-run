@@ -2,7 +2,7 @@ import { DotenvRunOptions, env, Dict } from "@dotenv-run/core";
 import type { Plugin } from "esbuild";
 import fs from "fs";
 
-export const dotenvRun = (options: DotenvRunOptions): Plugin => {
+const dotenvRun = (options: DotenvRunOptions): Plugin => {
   return {
     name: "dotenv-run",
     setup(build) {
@@ -34,3 +34,6 @@ export const dotenvRun = (options: DotenvRunOptions): Plugin => {
     },
   };
 };
+
+export { dotenvRun, DotenvRunOptions };
+export default dotenvRun;

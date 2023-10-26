@@ -23,7 +23,7 @@ npm add @dotenv-run/rollup --save-dev
 Create a `rollup.config.js` [configuration file](https://www.rollupjs.org/guide/en/#configuration-files) and import the plugin:
 
 ```js
-import env from '@dotenv-run/rollup';
+import { env } from '@dotenv-run/rollup';
 
 export default {
   input: 'src/index.js',

@@ -1,7 +1,7 @@
 {
   "name": "@dotenv-run/core",
   "version": "1.2.0",
-  "description": "Run your scripts with dotenv variables",
+  "description": "core library to load environment variables with monorepo support",
   "homepage": "https://github.com/chihab/dotenv-run",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",

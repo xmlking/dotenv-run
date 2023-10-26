@@ -61,7 +61,7 @@ function print(
   console.log("---------------------------------\n");
 }
 
-export function env(options: DotenvRunOptions) {
+export function env(options: DotenvRunOptions = {}) {
   options.appEnv = options.appEnv ?? "NODE_ENV";
   options.root = options.root ?? ".";
 
