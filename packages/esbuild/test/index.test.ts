@@ -20,7 +20,28 @@ describe("Usage with esbuild", () => {
     expect(results.outputFiles.at(0)?.text).toMatchSnapshot();
   });
 
-  it.skip("should replace environment variables using define option", async () => {
+
+  it("should replace environment variables using esbuild plugin and a custom define", async () => {
+    const results = await build({
+      write: false,
+      bundle: true,
+      entryPoints: [`test/app.js`],
+      define: {
+        "process.env.MY_API_BASE": '"https://dotenv-run.define"',
+        "import.meta.env.MY_API_BASE": '"https://dotenv-run.define"',
+      },
+      plugins: [
+        dotenvRun({
+          prefix: "MY_",
+          verbose: true,
+        }),
+      ],
+    });
+
+    expect(results.outputFiles.at(0)?.text).toMatchSnapshot();
+  });
+
+  it("should replace environment variables using define option", async () => {
     const { full } = env({
       prefix: "MY_",
       verbose: false,
