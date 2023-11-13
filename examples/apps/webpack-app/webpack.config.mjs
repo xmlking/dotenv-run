@@ -6,7 +6,7 @@ const __dirname = path.resolve();
 export default {
   plugins: [
     new DotenvRunPlugin(
-      { prefix: 'API', verbose: true, root: '../..' },
+      { prefix: '^API', verbose: true, root: '../..' },
       __dirname
     )
   ],

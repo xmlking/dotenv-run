@@ -6,7 +6,7 @@ it("should load dev environment from the root workspace", () => {
   const { full, stringified, raw } = env({
     root: "..",
     verbose: true,
-    prefix: "API_",
+    prefix: "^API_",
   });
   expect(raw).toEqual({
     API_AUTH: "https://dotenv-run.dev/api/v1/auth",

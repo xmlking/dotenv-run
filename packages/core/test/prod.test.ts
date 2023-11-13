@@ -6,7 +6,7 @@ it("should load prod environment", () => {
   const { full, stringified, raw } = env({
     root: "..",
     verbose: true,
-    prefix: "API_",
+    prefix: "^API_",
   });
   expect(raw).toEqual({
     API_AUTH: "https://dotenv-run.app/api/v1/auth",
