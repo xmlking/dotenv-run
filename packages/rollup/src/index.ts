@@ -1,9 +1,11 @@
 import { DotenvRunOptions, env } from "@dotenv-run/core";
 import replace from "@rollup/plugin-replace";
+import { Plugin } from "rollup";
 
-export default function (options: DotenvRunOptions) {
+const dotenvRun = (options: DotenvRunOptions): Plugin => {
   const { full } = env(options);
   return {
+    name: "dotenv-run",
     ...replace({
       preventAssignment: true,
       values: full,
@@ -11,4 +13,5 @@ export default function (options: DotenvRunOptions) {
   };
 }
 
-export { DotenvRunOptions };
+export { dotenvRun, DotenvRunOptions };
+export default dotenvRun;

@@ -6,6 +6,6 @@ export default {
     file: 'dist/index.js',
   },
   plugins: [
-    env({ prefix: 'API', verbose: true, root: '../../..' })
+    env({ prefix: '^API', verbose: true, root: '../../..' })
   ]
 };

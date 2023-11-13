@@ -1,5 +1,13 @@
 # @dotenv-run/webpack
 
+## 1.2.1
+
+### Patch Changes
+
+- refactor(esbuild): usde esbuild define option
+- Updated dependencies
+  - @dotenv-run/core@1.2.1
+
 ## 1.2.0
 
 ### Minor Changes

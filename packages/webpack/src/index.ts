@@ -1,6 +1,7 @@
 import { DotenvRunOptions, Dict, env } from "@dotenv-run/core";
 import type { WebpackPluginInstance, Compiler } from "webpack";
 import { DefinePlugin } from "webpack";
+
 class DotenvRunPlugin implements WebpackPluginInstance {
   public raw: Dict = {};
   public full: Dict = {};
