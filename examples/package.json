@@ -7,10 +7,10 @@
     "test:all": "nx run-many --target=test --all --parallel"
   },
   "devDependencies": {
-    "@dotenv-run/cli": "^1.2.0",
-    "@dotenv-run/load": "^1.2.0",
-    "@dotenv-run/webpack": "^1.2.0",
-    "@dotenv-run/rollup": "^1.2.0",
+    "@dotenv-run/cli": "^1.2.1",
+    "@dotenv-run/load": "^1.2.1",
+    "@dotenv-run/webpack": "^1.2.1",
+    "@dotenv-run/rollup": "^1.2.1",
     "webpack": "^5.0.0",
     "@playwright/test": "^1.37.1",
     "webpack-cli": "^5.0.0",
