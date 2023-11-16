@@ -19,7 +19,7 @@ export type DotenvRun = {
 
 function prepareEnv(processEnv: any) {
   const values = Object.keys(processEnv)
-    .filter((key) => key !== "NODE_ENV")
+    .filter((key) => key !== "NODE_ENV" && processEnv[key] !== undefined)
     .reduce<DotenvRun>(
       (env, key) => {
         const value = JSON.stringify(processEnv[key]);
