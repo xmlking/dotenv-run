@@ -1,5 +1,11 @@
 # @dotenv-run/core
 
+## 1.2.2
+
+### Patch Changes
+
+- fix(core): filter out undefined env values
+
 ## 1.2.1
 
 ### Patch Changes
