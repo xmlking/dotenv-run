@@ -37,8 +37,8 @@ export function getPathsDownTo(envPath: string, destination: string) {
 export function getTurboRoot(turboPath: string): string {
   // test if file content has `"extends": ["//"]`
   const isSubProject = readFileSync(turboPath, "utf8").includes('"extends"');
-  const parent = path.dirname(path.dirname(turboPath))
   if(isSubProject) {
+    const parent = path.dirname(path.dirname(turboPath))
     const rootPath = findUp.sync("turbo.json", {cwd: parent})
     if(rootPath) return rootPath
   }
