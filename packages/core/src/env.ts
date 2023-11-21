@@ -1,5 +1,5 @@
 import { config } from "dotenv";
-import { getAbsoluteEnvPath, getPathsDownTo, isSubfolder } from "./utils.js";
+import { getAbsoluteEnvPath, getPathsDownTo, isSubfolder, getTurboRoot } from "./utils.js";
 import { expand as dotenvExpand } from "dotenv-expand";
 import * as fs from "fs";
 import * as path from "path";
@@ -55,6 +55,11 @@ export function rootExpand(root?: string, environment?: string): string[] {
       "lerna.json",
       "pnpm-workspace.yaml",
     ]);
+
+    if(p && p.endsWith("turbo.json")) {
+      p = getTurboRoot(p)
+    }
+
     if (!p) p = findUp.sync(["package.json"]);
     root = p ? path.dirname(p) : process.cwd();
   }
