@@ -1,5 +1,6 @@
 import { config } from "dotenv";
-import { getAbsoluteEnvPath, getPathsDownTo, isSubfolder } from "./utils.js";
+import { existsSync, readFileSync } from "node:fs";
+import { getAbsoluteEnvPath, getPathsDownTo, isSubfolder, getTurboRoot } from "./utils.js";
 import { expand as dotenvExpand } from "dotenv-expand";
 import * as fs from "fs";
 import * as path from "path";
@@ -47,6 +48,9 @@ export function paths(
     .filter((envPath) => fs.existsSync(envPath));
 }
 
+
+
+
 export function rootExpand(root?: string, environment?: string): string[] {
   if (!root) {
     let p = findUp.sync([
@@ -55,6 +59,11 @@ export function rootExpand(root?: string, environment?: string): string[] {
       "lerna.json",
       "pnpm-workspace.yaml",
     ]);
+
+    if(p && p.endsWith("turbo.json")) {
+      p = getTurboRoot(p)
+    }
+
     if (!p) p = findUp.sync(["package.json"]);
     root = p ? path.dirname(p) : process.cwd();
   }
