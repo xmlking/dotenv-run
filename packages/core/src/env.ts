@@ -1,5 +1,4 @@
 import { config } from "dotenv";
-import { existsSync, readFileSync } from "node:fs";
 import { getAbsoluteEnvPath, getPathsDownTo, isSubfolder, getTurboRoot } from "./utils.js";
 import { expand as dotenvExpand } from "dotenv-expand";
 import * as fs from "fs";
