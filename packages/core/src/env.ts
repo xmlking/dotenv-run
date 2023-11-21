@@ -48,9 +48,6 @@ export function paths(
     .filter((envPath) => fs.existsSync(envPath));
 }
 
-
-
-
 export function rootExpand(root?: string, environment?: string): string[] {
   if (!root) {
     let p = findUp.sync([
