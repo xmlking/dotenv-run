@@ -32,7 +32,8 @@ export function filter(env: Env, prefix: RegExp): Env {
 export function paths(
   environment: string,
   root: string,
-  cwd = process.cwd()
+  cwd = process.cwd(),
+  envFiles: string | string[] = []
 ): string[] {
   const _root = getAbsoluteEnvPath(root, cwd); // resolved path to .env file
   let envPaths: string[] = [];
@@ -41,13 +42,21 @@ export function paths(
   } else {
     envPaths = getPathsDownTo(_root, cwd);
   }
+
+  // Convert string | string[] -->  string[]
+  envFiles = Array.isArray(envFiles) ? envFiles : [envFiles]
+  // Remove empty strings
+  const filteredEnvFiles = envFiles.filter((envFile) => envFile.trim().length > 0);
+  // Remove duplicate strings and add `.env`
+  const uniqueEnvFiles = Array.from(new Set(filteredEnvFiles).add('.env'));
+
   return envPaths
-    .map((envPath) => path.join(envPath, ".env"))
+    .flatMap((envPath) => uniqueEnvFiles.map(envFile => path.join(envPath, envFile)) )
     .flatMap((envPath) => buildEnvFiles(environment, envPath))
     .filter((envPath) => fs.existsSync(envPath));
 }
 
-export function rootExpand(root?: string, environment?: string): string[] {
+export function rootExpand(root?: string, environment?: string, envFiles?: string | string[]): string[] {
   if (!root) {
     let p = findUp.sync([
       "turbo.json",
@@ -63,7 +72,7 @@ export function rootExpand(root?: string, environment?: string): string[] {
     if (!p) p = findUp.sync(["package.json"]);
     root = p ? path.dirname(p) : process.cwd();
   }
-  const _paths = paths(environment || process.env.NODE_ENV, root);
+  const _paths = paths(environment || process.env.NODE_ENV, root, undefined, envFiles);
   expand(_paths);
   return _paths;
 }

@@ -6,9 +6,9 @@ import minimist from "minimist";
 import { run } from "./run.js";
 
 const argv = minimist(process.argv.slice(2), {
-  string: ["root", "env"],
+  string: ["root", "env", "env-file"],
   boolean: ["silent"],
-  alias: { help: "h", silent: "s", root: "r", env: "e" },
+  alias: { help: "h", silent: "s", root: "r", env: "e", "env-file": "f" },
 });
 
 function help() {
@@ -38,7 +38,7 @@ if (argv.h) {
     help();
     process.exit(1);
   }
-  const envPaths = rootExpand(argv.r, argv.e);
+  const envPaths = rootExpand(argv.r, argv.e, argv.f);
   import.meta.env = {};
   Object.keys(filter(process.env, /API/)).forEach((key) => {
     console.log(`${chalk.green("✔")} ${key}`);
