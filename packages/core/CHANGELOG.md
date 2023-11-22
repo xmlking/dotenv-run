@@ -1,5 +1,11 @@
 # @dotenv-run/core
 
+## 1.2.3
+
+### Patch Changes
+
+- feat(core): support sub-module level turbo.json
+
 ## 1.2.2
 
 ### Patch Changes
