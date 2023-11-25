@@ -31,4 +31,13 @@ describe("dotenv-run should give the expected output", () => {
     );
     expect(actual).toMatchSnapshot();
   });
+  it("multi", () => {
+    const actual = execSync(
+      "NODE_ENV=prod dotenv-run -s -e prod -f .secrets -- bash -c 'echo \"Hello World $API_USERS\"'",
+      {
+        encoding: "utf8",
+      }
+    );
+    expect(actual).toMatchSnapshot();
+  });
 });
